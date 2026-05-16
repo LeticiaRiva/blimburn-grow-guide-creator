@@ -1,0 +1,17 @@
+{
+  "name": "blimburn-grow-guide-creator",
+  "version": "1.0.0",
+  "description": "Blimburn Grow Guide Creator - SEO Tool",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'No build needed'"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

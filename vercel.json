@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/serp", "destination": "/api/serp" },
+    { "source": "/proxy", "destination": "/api/proxy" }
+  ]
+}

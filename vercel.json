@@ -3,6 +3,7 @@
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/serp", "destination": "/api/serp" },
-    { "source": "/proxy", "destination": "/api/proxy" }
+    { "source": "/proxy", "destination": "/api/proxy" },
+    { "source": "/audit", "destination": "/api/audit" }
   ]
 }

@@ -547,6 +547,10 @@ ${selectedMarket.forbiddenWords.map(w => `     • "${w}"`).join('\n')}
 8. PRIMARY KEYWORD RULES (MANDATORY):
    - The TARGET KEYWORD ("${keyword}") MUST be present in at least one H2 and at least one H3 naturally. If they are missing, rewrite an H2 and an H3 to include it naturally.
 
+9. COMPETITOR SEED BANK BAN (ABSOLUTE):
+   - Blimburn Seeds is the ONLY seed bank/brand allowed in the text. SCAN the draft and REMOVE any mention of competitor seed banks or breeders (e.g., Dutch Passion, Royal Queen Seeds, Barney's Farm, Sensi Seeds, Fast Buds, Sweet Seeds, Dinafem, Humboldt Seeds, ILGM, Seedsman, Green House Seeds, Nirvana, or any other).
+   - When you find one, rewrite the sentence to remove the brand name while keeping the genetic/technical info (e.g., replace "bred by Dutch Passion" with "a well-established cross"). Never attribute genetics to a named competitor.
+
 Output ONLY the final corrected HTML. No preambles or explanations.`;
 
     const userPrompt = `KEYWORD: "${keyword}"\n\nCURRENT DRAFT (${currentWordCount} words):\n--- \n${htmlDraft}\n ---`;
@@ -655,22 +659,22 @@ Produce your analysis in this exact format (do not use markdown code blocks for 
 [CRÍTICO: Debes seguir EXACTAMENTE esta estructura de encabezados, sin añadir ni quitar ninguno. Reemplaza la variable para usar la keyword: "${keyword}"]
 H1: How to Grow ${keyword}: A Step-by-Step Guide
 H2: ${keyword} Strain Overview: Traits, Effects & Genetics
-H2: Optimal Environment to Grow ${keyword} Successfully
-H2: Grow Room Setup for ${keyword} Plants
-  H3: Indoor Growing Tips for ${keyword}
-  H3: Outdoor Growing Tips for ${keyword}
+H2: Optimal Growing Environment
+H2: Grow Room Setup and Configuration
+  H3: Indoor Growing Tips
+  H3: Outdoor Growing Tips
 H2: How to Germinate & Propagate ${keyword}
-H2: Vegetative Stage: Nurturing Your ${keyword} Plants
-H2: Flowering ${keyword}: What to Expect
-H2: Feeding ${keyword}: Fertilizers & Nutrient Schedule
+H2: Vegetative Stage: Plant Care & Development
+H2: Flowering Stage: What to Expect
+H2: Fertilizers & Nutrient Schedule
 H2: Pest and Disease Prevention for Healthy Cannabis Plants
 H2: Harvesting & Drying ${keyword} the Right Way
-H2: How Tall Can ${keyword} Grow? Expected Plant Height
-H2: Best ${selectedMarket.regionName} Cities and Climates to Grow ${keyword}
-H2: How to Clone ${keyword}: A Step-by-Step Guide
-H2: What to Do With ${keyword} Plant Waste: Extraction & Repurposing
-H2: Why Grow ${keyword}? Key Benefits for Cultivators
-H2: Potential Challenges When Growing ${keyword}
+H2: Expected Plant Height & Structure
+H2: Best ${selectedMarket.regionName} Cities and Climates for This Strain
+H2: How to Clone ${keyword}: Step-by-Step
+H2: Plant Waste: Extraction & Repurposing
+H2: Key Benefits for Cultivators
+H2: Potential Challenges When Growing This Strain
 H2: Is ${keyword} Worth Buying? Here’s What You Need to Know
 H2: FAQs: Growing ${keyword}
 [Integra las keywords secundarias de forma natural en el texto bajo estos encabezados]
@@ -707,6 +711,15 @@ ${serp?.paaQuestions.length ? serp.paaQuestions.slice(0, 6).map((q, i) => `${i +
     const lang = selectedMarket.langFull;
     const market = selectedMarket.google_domain;
     const contentLang = selectedMarket.contentLang;
+    
+    // Tabla header translation by language
+    const tableHeaderTranslations = {
+      'en': 'Feature',
+      'es': 'Características',
+      'de': 'Merkmal',
+      'fr': 'Caractéristiques'
+    };
+    const tableHeaderLabel = tableHeaderTranslations[selectedMarket.lang] || 'Feature';
 
     const metricDirectives = market === 'google.com'
       ? `CRITICAL METRICS RULE (USA MARKET):
@@ -873,6 +886,14 @@ If Consumption/Effects:
   c) **Expert Guidelines**: Dosages (mg), duration, and harm reduction tips.
 DO NOT assume expert knowledge from the reader. Explain the EXACT mechanism or framework. To reach 1500 words, you must be extremely verbose in your explanations.
 
+RULE 1B — KEYWORD DENSITY (ANTI-SPAM, MANDATORY):
+The TARGET KEYWORD ("${keyword}") MUST appear in the final article with a density between 0.5% and 1.2% of the total word count.
+- NEVER repeat the exact keyword phrase more than once per paragraph.
+- NEVER force the keyword into a sentence where it sounds unnatural.
+- In body paragraphs, prefer pronouns ("it", "this strain", "the plant", "these seeds") or partial references ("the strain", "this variety") over repeating the full keyword.
+- The keyword is ONLY required verbatim in: the H1, the Quick Summary Box, 2-3 H2s maximum, and the first body paragraph. All other sections should reference the strain naturally.
+- FORBIDDEN pattern: starting multiple consecutive sentences or paragraphs with the exact keyword.
+
 RULE 2 — MANDATORY NUMERICAL DATA & METRIC SYSTEM:
 Every section MUST contain at least 2 specific numerical values. Examples:
   - THC/THCA percentages: «25.4% THCA», «28-32% THCA», never «high THCA»
@@ -898,7 +919,7 @@ The table must compare EXACTLY 3 specific items deeply relevant to the article's
 - If Effects/Consumption: compare 3 consumption methods, strains, or cannabinoids.
 - If Legislation/Market/News: compare 3 relevant states, legal limits, historical dates, or policy features.
 The table MUST have EXACTLY 4 columns:
-1. "Feature" (Merkmal / Eigenschaft) - Fixed label column.
+1. "${tableHeaderLabel}" - Fixed label column.
 2. [Item/Strain/Concept Name 1]
 3. [Item/Strain/Concept Name 2]
 4. [Item/Strain/Concept Name 3]
@@ -937,6 +958,14 @@ Blimburn Seeds is a cannabis SEED BANK. Only mention it in contexts where seed p
   - «Blimburn Seeds offers feminized and autoflowering seeds of [strain]»
 NEVER say «purchase cannabis flower from Blimburn Seeds». Maximum 2 natural mentions.
 
+CRITICAL — COMPETITOR SEED BANK BAN (ABSOLUTE, NO EXCEPTIONS):
+Blimburn Seeds is the ONLY seed bank/brand allowed to be named anywhere in the article.
+You are STRICTLY FORBIDDEN from naming, referencing, comparing, or attributing genetics to ANY other seed bank, breeder, or cannabis brand. This includes (but is NOT limited to):
+Dutch Passion, Royal Queen Seeds, Barney's Farm, Sensi Seeds, Fast Buds, Sweet Seeds, Dinafem, FastBuds, Humboldt Seeds, ILGM (I Love Growing Marijuana), Seedsman, Green House Seeds, Pyramid Seeds, Garden of Green, Zamnesia, Herbies, MSNL, Crop King Seeds, Nirvana, Ministry of Cannabis, 00 Seeds, or any other competitor.
+- NEVER write phrases like "originally bred by [brand]", "available from [brand]", "[brand]'s version", or "according to [brand]".
+- If a strain's genetics are historically tied to another breeder, describe the genetics WITHOUT naming the breeder (e.g., say "a classic indica-dominant cross" instead of naming the originator).
+- Naming any competitor seed bank is an ABSOLUTE FAILURE and the article will be rejected.
+
 CRITICAL CATALOG ENFORCEMENT:
 Whenever you mention, recommend, or compare ANY cannabis strain in this article, you MUST ONLY use strains that exist in the official Blimburn Seeds catalog.
 If you use a strain name that is NOT in the list below, the article will be rejected.
@@ -974,7 +1003,7 @@ All tables MUST follow this exact VERTICAL HTML structure (4 columns: Labels + 3
 <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
     <thead>
         <tr style="background-color: #1b5e20; color: white;">
-            <th style="padding: 12px; border: 1px solid #ddd;">Feature / Merkmal</th>
+            <th style="padding: 12px; border: 1px solid #ddd;">${tableHeaderLabel}</th>
             <th style="padding: 12px; border: 1px solid #ddd;">[Item Name 1]</th>
             <th style="padding: 12px; border: 1px solid #ddd;">[Item Name 2]</th>
             <th style="padding: 12px; border: 1px solid #ddd;">[Item Name 3]</th>
@@ -1054,25 +1083,25 @@ MANDATORY HTML OUTPUT STRUCTURE
 <!-- INSERT THE COMPARISON TABLE HERE -->
 [Insert the comparison table exactly following the HTML structure defined in RULE 10]
 
-<h2>Optimal Environment to Grow ${keyword} Successfully</h2>
+<h2>Optimal Growing Environment</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Grow Room Setup for ${keyword} Plants</h2>
-<h3>Indoor Growing Tips for ${keyword}</h3>
+<h2>Grow Room Setup and Configuration</h2>
+<h3>Indoor Growing Tips</h3>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
-<h3>Outdoor Growing Tips for ${keyword}</h3>
+<h3>Outdoor Growing Tips</h3>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
 <h2>How to Germinate & Propagate ${keyword}</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Vegetative Stage: Nurturing Your ${keyword} Plants</h2>
+<h2>Vegetative Stage: Plant Care & Development</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Flowering ${keyword}: What to Expect</h2>
+<h2>Flowering Stage: What to Expect</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Feeding ${keyword}: Fertilizers & Nutrient Schedule</h2>
+<h2>Fertilizers & Nutrient Schedule</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
 <h2>Pest and Disease Prevention for Healthy Cannabis Plants</h2>
@@ -1081,22 +1110,22 @@ MANDATORY HTML OUTPUT STRUCTURE
 <h2>Harvesting & Drying ${keyword} the Right Way</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>How Tall Can ${keyword} Grow? Expected Plant Height</h2>
+<h2>Expected Plant Height & Structure</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Best ${selectedMarket.regionName} Cities and Climates to Grow ${keyword}</h2>
+<h2>Best ${selectedMarket.regionName} Cities and Climates for This Strain</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>How to Clone ${keyword}: A Step-by-Step Guide</h2>
+<h2>How to Clone ${keyword}: Step-by-Step</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>What to Do With ${keyword} Plant Waste: Extraction & Repurposing</h2>
+<h2>Plant Waste: Extraction & Repurposing</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Why Grow ${keyword}? Key Benefits for Cultivators</h2>
+<h2>Key Benefits for Cultivators</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
-<h2>Potential Challenges When Growing ${keyword}</h2>
+<h2>Potential Challenges When Growing This Strain</h2>
 [Write 2 to 3 detailed technical paragraphs in ${contentLang} wrapped in <p> tags. Vary the paragraph count naturally.]
 
 <h2>Is ${keyword} Worth Buying? Here’s What You Need to Know</h2>
@@ -1471,17 +1500,7 @@ ${draftText.substring(0, 1000)}`;
     }
   }
 
-  // ============================================================
-  // EXTRACT META FROM HTML
-  // ============================================================
-  function extractMetaFromHtml(html) {
-    const titleMatch = html.match(/<!-- META-TITLE:\s*(.+?)\s*-->/i);
-    const descMatch = html.match(/<!-- META-DESC:\s*(.+?)\s*-->/i);
-    const metaTitle = titleMatch ? titleMatch[1] : '';
-    const metaDesc = descMatch ? descMatch[1] : '';
-    const cleanHtml = html.replace(/<!-- META-TITLE:.*?-->/gi, '').replace(/<!-- META-DESC:.*?-->/gi, '');
-    return { metaTitle, metaDesc, cleanHtml };
-  }
+  // (extractMetaFromHtml already defined above)
 
   // ============================================================
   // MAIN OPTIMIZE PIPELINE (UNIFIED)
@@ -1543,7 +1562,7 @@ QUALITY RULE: Strictly avoid typical AI patterns and forbidden buzzwords in head
 
       setPipelineStep(3);
       setStatus('Realizando Auditoría Técnica y expandiendo contenido…', 75);
-      const finalHtml = await callTechnicalAudit(optimizedHtml, keyword, secondaryKws);
+      let finalHtml = await callTechnicalAudit(optimizedHtml, keyword, secondaryKws);
 
       // --- LOCAL AUDIT SKIPPED BY DEFAULT ---
       const aiJudgment = null;
@@ -1598,6 +1617,41 @@ QUALITY RULE: Strictly avoid typical AI patterns and forbidden buzzwords in head
             </div>
           `;
           // Lo añadimos por arriba del contenido.
+          displayHtml = alertHtml + displayHtml;
+        }
+      }
+
+      // ============================================================
+      // ✅ VERIFICACIÓN NIVEL 1B: Detector de Bancos de Semillas Competidores
+      // ============================================================
+      const COMPETITOR_SEED_BANKS = [
+        'Dutch Passion', 'Royal Queen Seeds', "Barney's Farm", 'Barneys Farm', 'Sensi Seeds',
+        'Fast Buds', 'FastBuds', 'Sweet Seeds', 'Dinafem', 'Humboldt Seeds', 'ILGM',
+        'I Love Growing Marijuana', 'Seedsman', 'Green House Seeds', 'Greenhouse Seeds',
+        'Pyramid Seeds', 'Garden of Green', 'Zamnesia', 'Herbies', 'MSNL', 'Crop King Seeds',
+        'Nirvana Seeds', 'Ministry of Cannabis', '00 Seeds', 'DNA Genetics', 'Exotic Seed',
+        'Paradise Seeds', 'Serious Seeds', 'Mr. Nice', 'TH Seeds', 'Bomb Seeds'
+      ];
+      {
+        const textLower = stripHtml(cleanedHtml).toLowerCase();
+        const foundCompetitors = COMPETITOR_SEED_BANKS.filter(brand => textLower.includes(brand.toLowerCase()));
+        // Quitar duplicados conceptuales (p.ej. Barney's Farm / Barneys Farm) por su forma normalizada
+        const uniqueFound = [...new Set(foundCompetitors.map(b => b.replace(/['’]/g, '').toLowerCase()))]
+          .map(norm => foundCompetitors.find(b => b.replace(/['’]/g, '').toLowerCase() === norm));
+
+        if (uniqueFound.length > 0) {
+          const alertHtml = `
+            <div style="background-color:#fff3e0;border:2px solid #ff9800;border-radius:6px;padding:16px;margin-bottom:24px;">
+              <div style="color:#e65100;display:flex;align-items:center;gap:8px;font-size:1.1rem;font-weight:bold;margin-bottom:12px;">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                ⚠️ ALERTA: Se detectaron Bancos de Semillas Competidores
+              </div>
+              <div style="color:#bf360c;font-size:0.95rem;margin-bottom:8px;">La IA mencionó marcas/bancos que NO son Blimburn Seeds. Revisa el texto y elimínalas o regenera el artículo:</div>
+              <ul style="color:#bf360c;margin:0;padding-left:24px;font-weight:600;font-size:0.95rem;">
+                ${uniqueFound.map(b => `<li>"${b}"</li>`).join('')}
+              </ul>
+            </div>
+          `;
           displayHtml = alertHtml + displayHtml;
         }
       }
@@ -1689,7 +1743,7 @@ QUALITY RULE: Strictly avoid typical AI patterns and forbidden buzzwords in head
     $outputSerp.innerHTML = '<div class="serp-placeholder"><p>Los datos del SERP aparecerán aquí tras la auditoría SerpAPI.</p></div>';
     $outputBrief.innerHTML = '<div class="output-placeholder"><p>Genera el Brief SEO en el Paso 1. Luego podrás revisarlo antes de redactar el artículo final.</p></div>';
     $outputChecklist.innerHTML = '<div class="checklist-placeholder"><p>El checklist de calidad se generará tras la optimización.</p></div>';
-    $btnOptimize.disabled = true;
+    $btnBrief.disabled = false;
     $btnCopyHtml.disabled = true;
     $btnCopyGutenberg.disabled = true;
     $btnCopyText.disabled = true;
@@ -1700,7 +1754,7 @@ QUALITY RULE: Strictly avoid typical AI patterns and forbidden buzzwords in head
     $pipelineSteps.forEach(s => { s.classList.remove('pipeline__step--active', 'pipeline__step--done'); });
     $pipelineConnectors.forEach(c => c.classList.remove('pipeline__connector--done'));
     updateWordCount();
-    $inputContent.focus();
+    $inputKeyword.focus();
   }
 
   // ============================================================
